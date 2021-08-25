@@ -5,7 +5,7 @@ Current Squid Docker Image from Ubuntu. Receives security updates and rolls to n
 
 ## About Squid
 
-Squid is a fully-featured HTTP/1.0 proxy which is almost (but not quite - we're getting there!) a fully-featured HTTP/1.1 proxy. Squid offers a rich access control, authorization and logging environment to develop web proxy and content serving applications. Squid offers a rich set of traffic optimization options, most of which are enabled by default for simpler installation and high performance.
+Squid is a caching proxy for the Web supporting HTTP, HTTPS, FTP, and more. It reduces bandwidth and improves response times by caching and reusing frequently-requested web pages. Squid has extensive access controls and makes a great server accelerator. It runs on most available operating systems, including Windows and is licensed under the GNU GPL.
 
 
 ## Tags and Architectures
@@ -65,9 +65,11 @@ docker exec -it squid-container /bin/bash
 Works with any Kubernetes; if you don't have one, we recommend you [install MicroK8s](https://microk8s.io/) and `microk8s.enable dns storage` then `snap alias microk8s.kubectl kubectl`.
 
 Download
-[squid-deployment.yml](TBD) and set `containers.squid.image` in `squid-deployment.yml` to your chosen channel tag (e.g. `ubuntu/squid:4.13-21.10_beta`), then:
+[squid.conf](https://git.launchpad.net/~canonical-server/ubuntu-docker-images/+git/squid/plain/examples/config/squid.conf) and
+[squid-deployment.yml](https://git.launchpad.net/~canonical-server/ubuntu-docker-images/+git/squid/plain/examples/squid-deployment.yml) and set `containers.squid.image` in `squid-deployment.yml` to your chosen channel tag (e.g. `ubuntu/squid:4.13-21.10_beta`), then:
 
 ```sh
+kubectl create configmap squid-config --from-file=squid=squid.conf
 kubectl apply -f squid-deployment.yml
 ```
 

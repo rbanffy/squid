@@ -2,12 +2,11 @@ application: Squid
 main: true
 repo: squid
 description: >
-  Squid is a fully-featured HTTP/1.0 proxy which is almost (but not quite -
-  we're getting there!) a fully-featured HTTP/1.1 proxy. Squid offers a rich
-  access control, authorization and logging environment to develop web proxy
-  and content serving applications. Squid offers a rich set of traffic
-  optimization options, most of which are enabled by default for simpler
-  installation and high performance.
+  Squid is a caching proxy for the Web supporting HTTP, HTTPS, FTP, and more.
+  It reduces bandwidth and improves response times by caching and reusing
+  frequently-requested web pages. Squid has extensive access controls and makes
+  a great server accelerator. It runs on most available operating systems,
+  including Windows and is licensed under the GNU GPL.
 version: "4.13"
 base: Ubuntu 21.10
 architectures:
@@ -38,6 +37,12 @@ parameters:
 debug:
   - nothing
 microk8s:
+  configmap:
+    name: squid-config
+    files:
+      - key: squid
+        name: squid.conf
+        link: https://git.launchpad.net/~canonical-server/ubuntu-docker-images/+git/squid/plain/examples/config/squid.conf
   deploy:
-    link: TBD
+    link: https://git.launchpad.net/~canonical-server/ubuntu-docker-images/+git/squid/plain/examples/squid-deployment.yml
     access: You can now access the squid proxy on port 3128
