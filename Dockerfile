@@ -24,4 +24,5 @@ VOLUME /var/log/squid \
 	/etc/squid
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-CMD entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
+CMD ["-f", "/etc/squid/squid.conf", "-NYC"]
