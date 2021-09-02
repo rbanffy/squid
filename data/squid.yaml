@@ -26,9 +26,6 @@ parameters:
     value: 3128:3128
     description: Expose the proxy service
   - type: -v
-    value: /path/to/configuration:/etc/squid
-    description: Directory with squid configuration files
-  - type: -v
     value: /path/to/logs:/var/log/squid
     description: Volume to store squid logs
   - type: -v

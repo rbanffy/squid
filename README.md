@@ -40,7 +40,6 @@ Access your Squid proxy at `localhost:3128`.
 |---|---|
 | `-e TZ=UTC` | Timezone. |
 | `-p 3128:3128` | Expose the proxy service |
-| `-v /path/to/configuration:/etc/squid` | Directory with squid configuration files |
 | `-v /path/to/logs:/var/log/squid` | Volume to store squid logs |
 | `-v /path/to/data:/var/spool/squid` | Volume to store the squid cache |
 

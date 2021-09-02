@@ -20,8 +20,7 @@ RUN set -eux; \
 
 EXPOSE 3128
 VOLUME /var/log/squid \
-	/var/spool/squid \
-	/etc/squid
+	/var/spool/squid
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
