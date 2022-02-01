@@ -1,4 +1,4 @@
-FROM ubuntu:impish
+FROM ubuntu:jammy
 
 ENV TZ=UTC
 LABEL maintainer="Ubuntu Server team <ubuntu-server@lists.ubuntu.com>"
