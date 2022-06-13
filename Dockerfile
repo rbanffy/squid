@@ -12,6 +12,8 @@ RUN set -eux; \
 	rm -rf /var/lib/apt/lists/*; \
 	# Change default configuration to allow local network access \
 	sed -i 's/^#http_access allow localnet$/http_access allow localnet/' /etc/squid/conf.d/debian.conf; \
+	echo "# Set max_filedescriptors to avoid using system's RLIMIT_NOFILE. See LP: #1978272" > /etc/squid/conf.d/rock.conf; \
+	echo 'max_filedescriptors 1024' >> /etc/squid/conf.d/rock.conf; \
 	# smoketest
 	/usr/sbin/squid --version; \
 	# create manifest \
