@@ -1,4 +1,4 @@
-FROM ubuntu:kinetic
+FROM ubuntu:lunar
 
 ENV TZ=UTC
 LABEL maintainer="Ubuntu Server team <ubuntu-server@lists.ubuntu.com>"
