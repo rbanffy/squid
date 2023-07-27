@@ -1,7 +1,8 @@
-FROM ubuntu:lunar
+FROM debian:testing-slim
+
+LABEL maintainer="Ricardo Bánffy <rbanffy@gmail.com>"
 
 ENV TZ=UTC
-LABEL maintainer="Ubuntu Server team <ubuntu-server@lists.ubuntu.com>"
 
 RUN set -eux; \
 	apt-get update; \
