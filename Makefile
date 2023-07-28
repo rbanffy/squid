@@ -27,7 +27,7 @@ build: ## Builds the Docker images
 	docker build -t ${USER}/squid:latest-ppc64le --platform=linux/ppc64le .
 
 start: build ## Builds and starts the local arch Docker image
-	docker start -d -p 3270:3270 squid
+	docker start -d -p 3128:3128 squid
 
 upload_images: ## Uploads the docker images
 	docker image push ${USER}/squid:latest-amd64
