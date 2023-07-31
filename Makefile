@@ -3,6 +3,16 @@
 
 SHELL = /bin/sh
 
+BRANCH = $(shell git branch --show-current)
+
+ifeq ($(BRANCH),main)
+	IMAGE_TAG = stable
+else ($(BRANCH),develop)
+	IMAGE_TAG = latest
+else
+	IMAGE_TAG = $(BRANCH)
+endif
+
 define PRINT_HELP_PYSCRIPT
 import re, sys
 
@@ -15,34 +25,34 @@ endef
 export PRINT_HELP_PYSCRIPT
 
 help: ## Displays this message.
-	@echo "Please use \`make <target>' where <target> is one of:"
+	@echo "Please use \`make <target>` where <target> is one of:"
 	@python3 -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
 
 build: ## Builds the Docker images
-	docker build -t ${USER}/squid:latest-amd64 --platform=linux/amd64 .
-	docker build -t ${USER}/squid:latest-arm64 --platform=linux/arm64 .
-	docker build -t ${USER}/squid:latest-armv6 --platform=linux/arm/v6 .
-	docker build -t ${USER}/squid:latest-armv7 --platform=linux/arm/v7 .
-	docker build -t ${USER}/squid:latest-s390x --platform=linux/s390x .
-	docker build -t ${USER}/squid:latest-ppc64le --platform=linux/ppc64le .
+	docker build -t ${USER}/squid:${IMAGE_TAG}-amd64 --platform=linux/amd64 .
+	docker build -t ${USER}/squid:${IMAGE_TAG}-arm64 --platform=linux/arm64 .
+	docker build -t ${USER}/squid:${IMAGE_TAG}-armv6 --platform=linux/arm/v6 .
+	docker build -t ${USER}/squid:${IMAGE_TAG}-armv7 --platform=linux/arm/v7 .
+	docker build -t ${USER}/squid:${IMAGE_TAG}-s390x --platform=linux/s390x .
+	docker build -t ${USER}/squid:${IMAGE_TAG}-ppc64le --platform=linux/ppc64le .
 
 start: build ## Builds and starts the local arch Docker image
 	docker start -d -p 3128:3128 squid
 
 upload_images: ## Uploads the docker images
-	docker image push ${USER}/squid:latest-amd64
-	docker image push ${USER}/squid:latest-arm64
-	docker image push ${USER}/squid:latest-armv6
-	docker image push ${USER}/squid:latest-armv7
-	docker image push ${USER}/squid:latest-s390x
-	docker image push ${USER}/squid:latest-ppc64le
+	docker image push ${USER}/squid:${IMAGE_TAG}-amd64
+	docker image push ${USER}/squid:${IMAGE_TAG}-arm64
+	docker image push ${USER}/squid:${IMAGE_TAG}-armv6
+	docker image push ${USER}/squid:${IMAGE_TAG}-armv7
+	docker image push ${USER}/squid:${IMAGE_TAG}-s390x
+	docker image push ${USER}/squid:${IMAGE_TAG}-ppc64le
 
 upload: upload_images ## Uploads the manifest
-	docker manifest create ${USER}/squid:latest \
-		--amend ${USER}/squid:latest-amd64 \
-		--amend ${USER}/squid:latest-amd64 \
-		--amend ${USER}/squid:latest-armv6 \
-		--amend ${USER}/squid:latest-armv7 \
-		--amend ${USER}/squid:latest-s390x \
-		--amend ${USER}/squid:latest-ppc64le
-	docker manifest push ${USER}/squid:latest
+	docker manifest create ${USER}/squid:${IMAGE_TAG} \
+		--amend ${USER}/squid:${IMAGE_TAG}-amd64 \
+		--amend ${USER}/squid:${IMAGE_TAG}-amd64 \
+		--amend ${USER}/squid:${IMAGE_TAG}-armv6 \
+		--amend ${USER}/squid:${IMAGE_TAG}-armv7 \
+		--amend ${USER}/squid:${IMAGE_TAG}-s390x \
+		--amend ${USER}/squid:${IMAGE_TAG}-ppc64le
+	docker manifest push ${USER}/squid:${IMAGE_TAG}
